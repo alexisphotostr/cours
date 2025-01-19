@@ -246,6 +246,100 @@ mdadm --create --verbose /dev/md0 --level=raid1 --raid-devices=2 /dev/sdb /dev/s
 lsblk
 ```
 
+### RAID (Redundant Array of Independent Disks)
+
+RAID regroupe plusieurs disques pour améliorer la capacité, les performances, ou la sécurité des données.
+Fonctionne via une gestion logicielle ou matérielle.
+
+#### Objectifs du RAID
+1. Amélioration des performances : Lecture et écriture des données sur plusieurs disques simultanément.
+2. Sécurisation des données : Protection contre la perte de données via la redondance.
+3. Augmentation de la capacité de stockage : Combinaison de l'espace disponible sur plusieurs disques.
+
+#### Types de RAID et leurs caractéristiques
+
+##### RAID 0 : Performances maximales
+- **Principe** : Répartition des données sur plusieurs disques (stripping).
+- **Avantages** :
+  - Excellentes performances en lecture et écriture.
+  - Utilisation maximale de l’espace disponible.
+- **Inconvénients** :
+  - Aucune redondance : la perte d’un disque entraîne la perte de toutes les données.
+- **Utilisations** :
+  - Jeux vidéo.
+  - Montage vidéo.
+  - Applications nécessitant une grande vitesse.
+
+##### RAID 1 : Sécurité maximale
+- **Principe** : Copie identique des données sur deux disques (mirroring).
+- **Avantages** :
+  - Haute fiabilité : les données restent disponibles en cas de panne d’un disque.
+  - Performances améliorées en lecture (lecture simultanée sur deux disques).
+- **Inconvénients** :
+  - Espace disponible réduit à la taille d’un seul disque.
+  - Coût élevé (doublement du nombre de disques nécessaires).
+- **Utilisations** :
+  - Applications critiques nécessitant une haute disponibilité des données.
+
+##### RAID 5 : Équilibre entre performance et sécurité
+- **Principe** : Répartition des données avec une parité répartie sur les disques.
+  - La parité permet de reconstituer les données en cas de panne d’un disque.
+- **Avantages** :
+  - Bonne performance en lecture et écriture.
+  - Tolérance à la panne d’un disque.
+  - Utilisation optimisée de l’espace disque.
+- **Inconvénients** :
+  - Temps de reconstruction long en cas de panne.
+  - Performances d’écriture légèrement réduites à cause des calculs de parité.
+- **Configuration minimale** : 3 disques.
+
+##### RAID 6 : Redondance accrue
+- **Principe** : Similaire au RAID 5, mais avec une parité répartie sur deux disques.
+- **Avantages** :
+  - Tolérance à la panne de deux disques.
+  - Fiabilité accrue par rapport au RAID 5.
+- **Inconvénients** :
+  - Performances d’écriture plus faibles.
+  - Temps de reconstruction encore plus long.
+  - Coût élevé en raison du besoin d’au moins 4 disques.
+- **Utilisations** :
+  - Environnements critiques nécessitant une redondance élevée.
+
+##### RAID 10 (1+0) : Performance et sécurité combinées
+- **Principe** : Association de RAID 1 et RAID 0 (stripping + mirroring).
+- **Avantages** :
+  - Haute performance et haute sécurité.
+  - Tolérance à plusieurs pannes, selon les disques défectueux.
+- **Inconvénients** :
+  - Nécessite au moins 4 disques.
+  - Coût élevé.
+- **Utilisations** :
+  - Bases de données.
+  - Serveurs à haute disponibilité.
+
+---
+
+#### Fonctionnalités avancées du RAID
+1. **Disque de secours (spare)** :
+   - Disque de remplacement prêt à être utilisé en cas de panne.
+   - Permet une reconstruction automatique de la grappe.
+2. **Hot-swap (échange à chaud)** :
+   - Possibilité de remplacer un disque défectueux sans arrêter le système.
+
+#### Les sauvegardes : Sécurisation des données
+1. **Sauvegarde complète** :
+   - Copie de toutes les données.
+   - **Avantages** : Facile à restaurer, fiable.
+   - **Inconvénients** : Lente, consomme beaucoup d’espace.
+2. **Sauvegarde incrémentielle** :
+   - Copie des données modifiées depuis la dernière sauvegarde (complète ou incrémentielle).
+   - **Avantages** : Rapide, faible consommation d’espace.
+   - **Inconvénients** : Restauration longue (chaque sauvegarde doit être restaurée).
+3. **Sauvegarde différentielle** :
+   - Copie des données modifiées depuis la dernière sauvegarde complète.
+   - **Avantages** : Plus fiable que l’incrémentielle, restauration plus rapide.
+   - **Inconvénients** : Plus lente et consomme plus d’espace que l’incrémentielle.
+
 ---
 
 # Conclusion RAID
